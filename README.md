@@ -1,7 +1,9 @@
 # cURL for Github Action
 
 You can use this action to perform REST API base on [axios](https://github.com/axios/axios) module. 
+This repo is to use cURL to send request from Github Actions through a proxy with a static public IP. Since the virtual machine of Github Actions changes every time, this solution makes sure the request to a third-party always appears from the same IP.
 
+If you have any question regarding the code, feel free to create an issue in the repo.
 
 # Usage
 ```yaml
