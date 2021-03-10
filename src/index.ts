@@ -12,7 +12,7 @@ try {
         const basePath = process.env.GITHUB_WORKSPACE;
         const path = `${basePath}/${configPath}`;
         core.info(`Path is ${path}`);
-        console.log("path is", path);
+        core.debug(`Path is ${path}`);
         if(configPath.split('.').pop() !== 'json'){
             throw new Error('Config must be json file')
         }
@@ -22,6 +22,8 @@ try {
         let customConfig:  AxiosRequestConfig = JSON.parse(fs.readFileSync(path).toString()) as AxiosRequestConfig;
         sendRequestWithRetry(customConfig)
     }else{
+        core.info(`config is`);
+        core.info(JSON.stringify(config));
         sendRequestWithRetry(config)
     }
 } catch (err) {
