@@ -87,4 +87,7 @@ if (core.getInput('bearer-token')) {
 if (core.getInput('proxy-url')) {
     config.proxy = builder.proxy();
 }
+if (core.getInput('httpsAgent')) {
+    config.httpsAgent = core.getInput('httpsAgent');
+}
 exports["default"] = config;

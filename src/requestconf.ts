@@ -88,5 +88,9 @@ if(core.getInput('proxy-url')){
     config.proxy = builder.proxy()
 }
 
+if(core.getInput('httpsAgent')){
+    config.httpsAgent = core.getInput('httpsAgent')
+}
+
 
 export default config
