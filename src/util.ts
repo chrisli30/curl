@@ -36,10 +36,12 @@ export const sendRequestWithRetry = async (config: AxiosRequestConfig) => {
 
             core.info(`res`);
             core.info(JSON.stringify(res));
-            
+
             setOutput(res)
             exit = true
         } catch (err) {
+            core.info(`err`);
+            core.info(JSON.stringify(err));
             countRetry += 1
             if (countRetry <= numberOfRetry) {
                 core.info(`retry: ${countRetry}`)
