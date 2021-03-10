@@ -82,6 +82,8 @@ var sendRequestWithRetry = function (config) { return __awaiter(void 0, void 0, 
                 return [3 /*break*/, 7];
             case 3:
                 err_1 = _a.sent();
+                core.info("err");
+                core.info(JSON.stringify(err_1));
                 countRetry += 1;
                 if (!(countRetry <= numberOfRetry)) return [3 /*break*/, 5];
                 core.info("retry: " + countRetry);
