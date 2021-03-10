@@ -1,14 +1,7 @@
 "use strict";
-var __importStar = (this && this.__importStar) || function (mod) {
-    if (mod && mod.__esModule) return mod;
-    var result = {};
-    if (mod != null) for (var k in mod) if (Object.hasOwnProperty.call(mod, k)) result[k] = mod[k];
-    result["default"] = mod;
-    return result;
-};
-Object.defineProperty(exports, "__esModule", { value: true });
-var core = __importStar(require("@actions/core"));
-var util = __importStar(require("./util"));
+exports.__esModule = true;
+var core = require("@actions/core");
+var util = require("./util");
 var setOutput = function (res) {
     if (!res) {
         throw new Error('No response from request');
@@ -19,5 +12,4 @@ var setOutput = function (res) {
     }
     core.setOutput('response', util.buildOutput(res));
 };
-exports.default = setOutput;
-//# sourceMappingURL=output.js.map
+exports["default"] = setOutput;

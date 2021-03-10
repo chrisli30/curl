@@ -20,6 +20,10 @@ export const buildOutput = (res: AxiosResponse<any>): string => {
 }
 
 export const sendRequestWithRetry = async (config: AxiosRequestConfig) => {
+
+    core.info(`config`);
+    core.info(JSON.stringify(config));
+    
     var exit = false
     var countRetry = 0
     const retryArr: string[] = core.getInput('retry').split('/')

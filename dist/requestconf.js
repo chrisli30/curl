@@ -10,15 +10,8 @@ var __assign = (this && this.__assign) || function () {
     };
     return __assign.apply(this, arguments);
 };
-var __importStar = (this && this.__importStar) || function (mod) {
-    if (mod && mod.__esModule) return mod;
-    var result = {};
-    if (mod != null) for (var k in mod) if (Object.hasOwnProperty.call(mod, k)) result[k] = mod[k];
-    result["default"] = mod;
-    return result;
-};
-Object.defineProperty(exports, "__esModule", { value: true });
-var core = __importStar(require("@actions/core"));
+exports.__esModule = true;
+var core = require("@actions/core");
 // builder for request config
 var builder = {
     basicAuth: function () {
@@ -94,5 +87,4 @@ if (core.getInput('bearer-token')) {
 if (core.getInput('proxy-url')) {
     config.proxy = builder.proxy();
 }
-exports.default = config;
-//# sourceMappingURL=requestconf.js.map
+exports["default"] = config;

@@ -1,18 +1,8 @@
 "use strict";
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
-var __importStar = (this && this.__importStar) || function (mod) {
-    if (mod && mod.__esModule) return mod;
-    var result = {};
-    if (mod != null) for (var k in mod) if (Object.hasOwnProperty.call(mod, k)) result[k] = mod[k];
-    result["default"] = mod;
-    return result;
-};
-Object.defineProperty(exports, "__esModule", { value: true });
-var requestconf_1 = __importDefault(require("./requestconf"));
-var core = __importStar(require("@actions/core"));
-var fs = __importStar(require("fs"));
+exports.__esModule = true;
+var requestconf_1 = require("./requestconf");
+var core = require("@actions/core");
+var fs = require("fs");
 var util_1 = require("./util");
 try {
     if (core.getInput('custom-config')) {
@@ -30,10 +20,11 @@ try {
         util_1.sendRequestWithRetry(customConfig);
     }
     else {
-        util_1.sendRequestWithRetry(requestconf_1.default);
+        core.info("config");
+        core.info(JSON.stringify(requestconf_1["default"]));
+        util_1.sendRequestWithRetry(requestconf_1["default"]);
     }
 }
 catch (err) {
     core.setFailed(err.message);
 }
-//# sourceMappingURL=index.js.map
