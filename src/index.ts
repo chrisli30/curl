@@ -12,6 +12,7 @@ try {
         const basePath = process.env.GITHUB_WORKSPACE;
         const path = `${basePath}/${configPath}`;
         core.info(`Path is ${path}`);
+        console.log("path is", path);
         if(configPath.split('.').pop() !== 'json'){
             throw new Error('Config must be json file')
         }
