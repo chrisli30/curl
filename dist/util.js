@@ -75,6 +75,8 @@ var sendRequestWithRetry = function (config) { return __awaiter(void 0, void 0, 
                 return [4 /*yield*/, axios_1["default"](config)];
             case 2:
                 res = _a.sent();
+                core.info("res");
+                core.info(JSON.stringify(res));
                 output_1["default"](res);
                 exit = true;
                 return [3 /*break*/, 7];
