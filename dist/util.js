@@ -50,9 +50,6 @@ var validateStatusCode = function (actualStatusCode) {
 };
 exports.validateStatusCode = validateStatusCode;
 var buildOutput = function (res) {
-    core.info("try to build output");
-    core.info(res.statusText);
-    core.info(res.data);
     return JSON.stringify({
         "status_code": res.status,
         "data": res.data,
@@ -79,13 +76,11 @@ var sendRequestWithRetry = function (config) { return __awaiter(void 0, void 0, 
             case 2:
                 res = _a.sent();
                 core.info("isSuccess");
-                core.info("setting output");
                 output_1["default"](res);
                 exit = true;
                 return [3 /*break*/, 7];
             case 3:
                 err_1 = _a.sent();
-                core.info("err");
                 countRetry += 1;
                 if (!(countRetry <= numberOfRetry)) return [3 /*break*/, 5];
                 core.info("retry: " + countRetry);

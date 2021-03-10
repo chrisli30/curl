@@ -1,7 +1,5 @@
-
-import axios from 'axios'
 import * as core from '@actions/core'
-import { AxiosRequestConfig, Method, AxiosBasicCredentials, AxiosProxyConfig} from 'axios'
+import { AxiosRequestConfig, Method, AxiosBasicCredentials} from 'axios'
 const HttpsProxyAgent = require('https-proxy-agent');
 
 // builder for request config
