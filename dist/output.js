@@ -3,6 +3,7 @@ exports.__esModule = true;
 var core = require("@actions/core");
 var util = require("./util");
 var setOutput = function (res) {
+    core.info("check !res");
     if (!res) {
         throw new Error('No response from request');
     }

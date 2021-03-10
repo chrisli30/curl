@@ -4,6 +4,8 @@ import { AxiosResponse } from 'axios'
 
 const setOutput = (res: void | AxiosResponse <any>) => {
     
+    core.info("check !res");
+
     if(!res){
         throw new Error('No response from request')
     }

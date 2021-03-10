@@ -78,15 +78,14 @@ var sendRequestWithRetry = function (config) { return __awaiter(void 0, void 0, 
                 return [4 /*yield*/, axios_1["default"](config)];
             case 2:
                 res = _a.sent();
-                core.info("res");
-                core.info(JSON.stringify(res));
+                core.info("isSuccess");
+                core.info("setting output");
                 output_1["default"](res);
                 exit = true;
                 return [3 /*break*/, 7];
             case 3:
                 err_1 = _a.sent();
                 core.info("err");
-                core.info(JSON.stringify(err_1));
                 countRetry += 1;
                 if (!(countRetry <= numberOfRetry)) return [3 /*break*/, 5];
                 core.info("retry: " + countRetry);
