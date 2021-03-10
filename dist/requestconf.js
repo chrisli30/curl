@@ -12,6 +12,7 @@ var __assign = (this && this.__assign) || function () {
 };
 exports.__esModule = true;
 var core = require("@actions/core");
+var HttpsProxyAgent = require('https-proxy-agent');
 // builder for request config
 var builder = {
     basicAuth: function () {
@@ -27,40 +28,25 @@ var builder = {
     bearerToken: function () {
         return "Bearer " + core.getInput('bearer-token');
     },
-    proxy: function () {
-        var proxy;
-        if (core.getInput('proxy-url').includes('//')) {
-            var proxyUrlArr = core.getInput('proxy-url').replace('//', '').trim().split(':');
-            if (proxyUrlArr.length !== 3) {
-                throw new Error('proxy-url format is invalid. The valid format should be host:port.');
-            }
-            proxy = {
-                protocol: proxyUrlArr[0],
-                host: proxyUrlArr[1],
-                port: Number(proxyUrlArr[2])
-            };
+    httpsAgent: function () {
+        var proxyUrlArr = core.getInput('proxy-url').replace('//', '').trim().split(':');
+        if (proxyUrlArr.length !== 3) {
+            throw new Error('proxy-url format is invalid. The valid format should be host:port.');
         }
-        else {
-            var proxyUrlArr = core.getInput('proxy-url').trim().split(':');
-            if (proxyUrlArr.length !== 2) {
-                throw new Error('proxy-url format is invalid. The valid format should be host:port.');
-            }
-            proxy = {
-                host: proxyUrlArr[0],
-                port: Number(proxyUrlArr[1])
-            };
+        var url = {
+            protocol: proxyUrlArr[0],
+            host: proxyUrlArr[1],
+            port: Number(proxyUrlArr[2])
+        };
+        var proxyAuthArr = core.getInput('proxy-auth').trim().split(':');
+        if (proxyAuthArr.length !== 2) {
+            throw new Error('proxy-auth format is invalid. The valid format should be username:password.');
         }
-        if (core.getInput('proxy-auth')) {
-            var proxyAuthArr = core.getInput('proxy-auth').trim().split(':');
-            if (proxyAuthArr.length !== 2) {
-                throw new Error('proxy-auth format is invalid. The valid format should be username:password.');
-            }
-            proxy.auth = {
-                username: proxyAuthArr[0],
-                password: proxyAuthArr[1]
-            };
-        }
-        return proxy;
+        var auth = {
+            username: proxyAuthArr[0],
+            password: proxyAuthArr[1]
+        };
+        return new HttpsProxyAgent(url.protocol + "://" + auth.username + ":" + auth.password + "@" + url.host + ":" + url.port);
     }
 };
 // Request config  
@@ -84,10 +70,7 @@ if (core.getInput('body')) {
 if (core.getInput('bearer-token')) {
     config.headers = __assign(__assign({}, config.headers), { Authorization: builder.bearerToken() });
 }
-if (core.getInput('proxy-url')) {
-    config.proxy = builder.proxy();
-}
-if (core.getInput('httpsAgent')) {
-    config.httpsAgent = core.getInput('httpsAgent');
+if (core.getInput('proxy-url') && core.getInput('proxy-auth')) {
+    config.httpsAgent = builder.httpsAgent();
 }
 exports["default"] = config;

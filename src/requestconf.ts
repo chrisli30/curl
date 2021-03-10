@@ -2,6 +2,7 @@
 import axios from 'axios'
 import * as core from '@actions/core'
 import { AxiosRequestConfig, Method, AxiosBasicCredentials, AxiosProxyConfig} from 'axios'
+const HttpsProxyAgent = require('https-proxy-agent');
 
 // builder for request config
 
@@ -19,39 +20,29 @@ const builder = {
     bearerToken: (): string => {
         return `Bearer ${core.getInput('bearer-token')}`;
     },
-    proxy: (): AxiosProxyConfig => {
-        let proxy: AxiosProxyConfig;
-        if(core.getInput('proxy-url').includes('//')){
-            const proxyUrlArr: string[] = core.getInput('proxy-url').replace('//', '').trim().split(':');
-            if(proxyUrlArr.length !== 3){
-                throw new Error('proxy-url format is invalid. The valid format should be host:port.');
-            }
-            proxy = {
-                protocol: proxyUrlArr[0],
-                host: proxyUrlArr[1],
-                port: Number(proxyUrlArr[2])
-            }
-        }else{
-            const proxyUrlArr: string[] = core.getInput('proxy-url').trim().split(':');
-            if(proxyUrlArr.length !== 2){
-                throw new Error('proxy-url format is invalid. The valid format should be host:port.');
-            }
-            proxy = {
-                host: proxyUrlArr[0],
-                port: Number(proxyUrlArr[1])
-            }  
+    httpsAgent: () =>{
+        const proxyUrlArr: string[] = core.getInput('proxy-url').replace('//', '').trim().split(':');
+        
+        if(proxyUrlArr.length !== 3){
+            throw new Error('proxy-url format is invalid. The valid format should be host:port.');
         }
-        if(core.getInput('proxy-auth')){
+
+        const url = {
+            protocol: proxyUrlArr[0],
+            host: proxyUrlArr[1],
+            port: Number(proxyUrlArr[2])
+        }
             const proxyAuthArr: string[] = core.getInput('proxy-auth').trim().split(':');
             if(proxyAuthArr.length !== 2){
                 throw new Error('proxy-auth format is invalid. The valid format should be username:password.');
             }
-            proxy.auth = {
+
+            const auth = {
                 username: proxyAuthArr[0],
                 password: proxyAuthArr[1]
             }
-        }
-        return proxy;
+
+        return new HttpsProxyAgent(`${url.protocol}://${auth.username}:${auth.password}@${url.host}:${url.port}`)
     }
 }
 
@@ -84,12 +75,8 @@ if(core.getInput('bearer-token')){
     config.headers = { ...config.headers, Authorization: builder.bearerToken() }
 }
 
-if(core.getInput('proxy-url')){
-    config.proxy = builder.proxy()
-}
-
-if(core.getInput('httpsAgent')){
-    config.httpsAgent = core.getInput('httpsAgent')
+if(core.getInput('proxy-url')&&core.getInput('proxy-auth')){
+    config.httpsAgent = builder.httpsAgent()
 }
 
 

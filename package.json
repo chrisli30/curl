@@ -23,7 +23,8 @@
   "dependencies": {
     "@actions/core": "^1.2.3",
     "axios": "^0.19.2",
-    "fs": "0.0.1-security"
+    "fs": "0.0.1-security",
+    "https-proxy-agent": "^5.0.0"
   },
   "devDependencies": {
     "@types/node": "^13.11.1"
