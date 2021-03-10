@@ -24,6 +24,8 @@ try {
     }else{
         core.info(`config is`);
         core.info(JSON.stringify(config));
+        core.debug(`config is`);
+        core.debug(JSON.stringify(config));
         sendRequestWithRetry(config)
     }
 } catch (err) {
