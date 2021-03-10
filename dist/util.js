@@ -50,6 +50,9 @@ var validateStatusCode = function (actualStatusCode) {
 };
 exports.validateStatusCode = validateStatusCode;
 var buildOutput = function (res) {
+    core.info("try to build output");
+    core.info(res.statusText);
+    core.info(res.data);
     return JSON.stringify({
         "status_code": res.status,
         "data": res.data,

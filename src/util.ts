@@ -12,6 +12,11 @@ export const validateStatusCode = (actualStatusCode: string): void => {
 }
 
 export const buildOutput = (res: AxiosResponse<any>): string => {
+
+    core.info("try to build output");
+    core.info(res.statusText);
+    core.info(res.data);
+
     return JSON.stringify({
         "status_code": res.status,
         "data": res.data,
