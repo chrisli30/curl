@@ -21,9 +21,6 @@ try {
         let customConfig:  AxiosRequestConfig = JSON.parse(fs.readFileSync(path).toString()) as AxiosRequestConfig;
         sendRequestWithRetry(customConfig)
     }else{
-        core.info(`config`);
-        core.info(JSON.stringify(config));
-
         sendRequestWithRetry(config)
     }
 } catch (err) {

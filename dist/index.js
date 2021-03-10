@@ -20,8 +20,6 @@ try {
         util_1.sendRequestWithRetry(customConfig);
     }
     else {
-        core.info("config");
-        core.info(JSON.stringify(requestconf_1["default"]));
         util_1.sendRequestWithRetry(requestconf_1["default"]);
     }
 }
